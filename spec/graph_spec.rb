@@ -7,7 +7,14 @@ RSpec.describe Graph do
 
   subject { DeliveryGain.new(graph).graph }
 
-  context '#available_route?' do
+  describe '#count_routes_arriving' do
+    it do
+      expect(subject.count_routes_arriving('A')).to eq 2
+      expect(subject.count_routes_arriving('C')).to eq 3
+    end
+  end
+
+  describe '#available_route?' do
     context 'with available route' do
       it do
         route = ['A', 'D', 'E']
@@ -23,7 +30,7 @@ RSpec.describe Graph do
     end
   end
 
-  context '#sum_costs' do
+  describe '#sum_costs' do
     context 'with no available route' do
       it do
         route = ['A', 'F', 'E']

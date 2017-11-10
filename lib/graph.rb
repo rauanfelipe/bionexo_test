@@ -49,6 +49,10 @@ class Graph
     costs.map(&:to_i).reduce(:+)
   end
 
+  def count_routes_arriving(to)
+    customers.flat_map(&:neighbors).count(to)
+  end
+
   def find_customer_by_name(name)
     customers.each do |c|
      return c if c.name == name
