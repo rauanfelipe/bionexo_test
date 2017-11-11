@@ -25,7 +25,7 @@ RSpec.describe DeliveryGain do
   end
 
   describe '#process' do
-    let(:outputs) { [5, 'NO SUCH ROUTE', 10, 19, 5, 3] }
+    let(:outputs) { [5, 'NO SUCH ROUTE', 10, 19, 5, 3, 6, 2] }
     subject { described_class }
 
     it do

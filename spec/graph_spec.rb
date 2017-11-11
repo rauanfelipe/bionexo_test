@@ -7,6 +7,18 @@ RSpec.describe Graph do
 
   subject { DeliveryGain.new(graph).graph }
 
+  describe '#search_routes_with_max_stops' do
+
+    start_name = 'B'
+    end_name = 'A'
+    max_stops = 5
+
+    it do
+      routes = subject.search_routes_with_max_stops(start_name, end_name, max_stops)
+      expect(routes.size).to eq 6
+    end
+  end
+
   describe '#count_routes_arriving' do
     it do
       expect(subject.count_routes_arriving('A')).to eq 2
