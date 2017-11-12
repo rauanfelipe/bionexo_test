@@ -33,7 +33,7 @@ class Graph
   end
 
   def sum_expenses(route)
-    return unless available_route?(route)
+    return 0 unless available_route?(route)
 
     all_expenses = []
 
@@ -65,6 +65,20 @@ class Graph
     end
 
     routes.size
+  end
+
+  def search_routes_cheaper(start_name, end_name, expense, result=[], routes=[])
+    result = result+[start_name] # copy and add start_name
+
+    routes << result if (start_name == end_name && available_route?(result))
+
+    @paths[start_name].each do |p|
+      if (sum_expenses(result) < expense)
+        search_routes_cheaper(p, end_name, expense, result, routes)
+      end
+    end
+
+    routes.select { |r| sum_expenses(r) < expense }.size
   end
 
   def shortest_route(start_name, end_name) # dijkstra

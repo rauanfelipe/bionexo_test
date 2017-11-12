@@ -7,6 +7,14 @@ RSpec.describe Graph do
 
   subject { DeliveryGain.new(graph).graph }
 
+  describe '#search_routes_cheaper' do
+    let(:start_name) { 'A' }
+    let(:end_name) { 'B' }
+    let(:expense) { 40 }
+
+    it { expect(subject.search_routes_cheaper(start_name, end_name, expense)).to eq 27 }
+  end
+
   describe '#shortest_route' do
     let(:start_name) { 'A' }
     let(:end_name) { 'E' }
@@ -52,7 +60,7 @@ RSpec.describe Graph do
     context 'with no available route' do
       it do
         route = ['A', 'F', 'E']
-        expect(subject.sum_expenses(route)).to be_nil
+        expect(subject.sum_expenses(route)).to eq 0
       end
     end
 

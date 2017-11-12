@@ -66,6 +66,12 @@ class DeliveryGain
     # 10. The cost of the shortest route between the clients `C` and `E`.
     arr << -> { @graph.shortest_route('C', 'E') }
 
+    # 11. The number of different routes between the clients `A` and `B` that costs less than 40.
+    arr << -> { @graph.search_routes_cheaper('A', 'B', 40) }
+
+    # 12. The number of different routes between the clients `E` and `D` that costs less than 60.
+    arr << -> { @graph.search_routes_cheaper('E', 'D', 60) }
+
     arr.map &:call
   end
 
