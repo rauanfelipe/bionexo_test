@@ -10,7 +10,7 @@ RSpec.describe DeliveryGain do
 
       it do
         subject = described_class.new(graph)
-        expect(subject.sum_cost(route)).to eq 'NO SUCH ROUTE'
+        expect(subject.sum_expenses(route)).to eq 'NO SUCH ROUTE'
       end
     end
 
@@ -19,13 +19,13 @@ RSpec.describe DeliveryGain do
 
       it do
         subject = described_class.new(graph)
-        expect(subject.sum_cost(route)).to eq 5
+        expect(subject.sum_expenses(route)).to eq 5
       end
     end
   end
 
   describe '#process' do
-    let(:outputs) { [5, 'NO SUCH ROUTE', 10, 19, 5, 3, 6, 2] }
+    let(:outputs) { [5, 'NO SUCH ROUTE', 10, 19, 5, 3, 6, 'NOT IMPLEMENTED', 5, 6] }
     subject { described_class }
 
     it do

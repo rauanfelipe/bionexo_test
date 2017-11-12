@@ -7,15 +7,21 @@ RSpec.describe Graph do
 
   subject { DeliveryGain.new(graph).graph }
 
-  describe '#search_routes_with_max_stops' do
+  describe '#shortest_route' do
+    let(:start_name) { 'A' }
+    let(:end_name) { 'E' }
 
-    start_name = 'B'
-    end_name = 'A'
-    max_stops = 5
+    it { expect(subject.shortest_route(start_name, end_name)).to eq 5 }
+  end
+
+  describe '#search_routes_with_max_stops' do
+    let(:start_name) { 'B' }
+    let(:end_name) { 'A' }
+    let(:max_stops) { 5 }
 
     it do
       routes = subject.search_routes_with_max_stops(start_name, end_name, max_stops)
-      expect(routes.size).to eq 6
+      expect(routes).to eq 6
     end
   end
 
@@ -42,33 +48,33 @@ RSpec.describe Graph do
     end
   end
 
-  describe '#sum_costs' do
+  describe '#sum_expenses' do
     context 'with no available route' do
       it do
         route = ['A', 'F', 'E']
-        expect(subject.sum_costs(route)).to be_nil
+        expect(subject.sum_expenses(route)).to be_nil
       end
     end
 
     context 'with available route' do
       it do
         route = ['A', 'D', 'E']
-        expect(subject.sum_costs(route)).to eq 5
+        expect(subject.sum_expenses(route)).to eq 5
       end
 
       it do
         route = ['F', 'C']
-        expect(subject.sum_costs(route)).to eq 5
+        expect(subject.sum_expenses(route)).to eq 5
       end
 
       it do
         route = ['B', 'D', 'F', 'E']
-        expect(subject.sum_costs(route)).to eq 19
+        expect(subject.sum_expenses(route)).to eq 19
       end
 
       it do
         route = ['E', 'C', 'B']
-        expect(subject.sum_costs(route)).to eq 10
+        expect(subject.sum_expenses(route)).to eq 10
       end
     end
   end

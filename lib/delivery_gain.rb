@@ -13,7 +13,7 @@ class DeliveryGain
 
     build_graph
   end
-  
+
   def build_graph
     customers =  @default_routes.flat_map { |r| r.take 2 }.uniq
 
@@ -26,36 +26,52 @@ class DeliveryGain
       @graph.add_edge(*route)
     end
   end
-  
+
+  def sum_expenses(route)
+    return 'NO SUCH ROUTE' unless @graph.available_route?(route)
+
+    @graph.sum_expenses(route)
+  end
+
   def process
     arr = []
 
     #1. The cost of the route A-D-E.
+    arr << -> { sum_expenses(['A', 'D', 'E']) }
+
     #2. The cost of the route A-F-E.
+    arr << -> { sum_expenses(['A', 'F', 'E']) }
+
     #3. The cost of the route E-C-B.
+    arr << -> { sum_expenses(['E', 'C', 'B']) }
+
     #4. The cost of the route B-D-F-E.
+    arr << -> { sum_expenses(['B', 'D', 'F', 'E']) }
+
     #5. The cost of the route F-C.
-    arr << -> { sum_cost(['A', 'D', 'E']) }
-    arr << -> { sum_cost(['A', 'F', 'E']) }
-    arr << -> { sum_cost(['E', 'C', 'B']) }
-    arr << -> { sum_cost(['B', 'D', 'F', 'E']) }
-    arr << -> { sum_cost(['F', 'C']) }
+    arr << -> { sum_expenses(['F', 'C']) }
 
     #6. How many routes are arriving the client `C`
     arr << -> { @graph.count_routes_arriving('C') }
 
-    # 7. How many routes start at the client `B` and end at the client `A` with a maximum of 5 stops. 
-    arr << -> { @graph.search_routes_with_max_stops('B', 'A', 5).size }
+    # 7. How many routes start at the client `B` and end at the client `A` with a maximum of 5 stops.
+    arr << -> { @graph.search_routes_with_max_stops('B', 'A', 5) }
 
     # 8. How many routes start at the client `A` and end at the client `A` with exactly 3 stops.
-    arr << -> { @graph.search_routes_with_max_stops('A', 'A', 3).size }
+    arr << -> { not_implemented }
+
+    # 9. The cost of the shortest route between the clients `A` and `E`.
+    arr << -> { @graph.shortest_route('A', 'E') }
+
+    # 10. The cost of the shortest route between the clients `C` and `E`.
+    arr << -> { @graph.shortest_route('C', 'E') }
 
     arr.map &:call
   end
 
-  def sum_cost(route)
-    return 'NO SUCH ROUTE' unless @graph.available_route?(route)
+  private
 
-    @graph.sum_costs(route)
+  def not_implemented
+    return 'NOT IMPLEMENTED'
   end
 end
