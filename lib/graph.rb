@@ -53,14 +53,26 @@ class Graph
     customers.flat_map(&:neighbors).count(to)
   end
 
-  def search_routes_with_max_stops(start_name, end_name, max_stops, result=[], routes=[])
-    result = result+[start_name] # copy and add start_name
+  def count_routes_with_stops(start_name, end_name, stops, result=[], routes=[])
+    result = result+[start_name]
+
+    routes << result if (start_name == end_name && available_route?(result))
+
+    @paths[start_name].each do |p|
+      count_routes_with_max_stops(p, end_name, stops, result, routes)
+    end
+
+    routes.map { |route| route.size == (stops + 1) }.count(true)
+  end
+
+  def count_routes_with_max_stops(start_name, end_name, max_stops, result=[], routes=[])
+    result = result+[start_name]
 
     routes << result if (start_name == end_name && available_route?(result))
 
     @paths[start_name].each do |p|
       if result.size <= max_stops
-        search_routes_with_max_stops(p, end_name, max_stops, result, routes)
+        count_routes_with_max_stops(p, end_name, max_stops, result, routes)
       end
     end
 

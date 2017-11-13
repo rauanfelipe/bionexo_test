@@ -55,10 +55,10 @@ class DeliveryGain
     arr << -> { @graph.count_routes_arriving('C') }
 
     # 7. How many routes start at the client `B` and end at the client `A` with a maximum of 5 stops.
-    arr << -> { @graph.search_routes_with_max_stops('B', 'A', 5) }
+    arr << -> { @graph.count_routes_with_max_stops('B', 'A', 5) }
 
     # 8. How many routes start at the client `A` and end at the client `A` with exactly 3 stops.
-    arr << -> { not_implemented }
+    arr << -> { @graph.count_routes_with_stops('A', 'A', 3) }
 
     # 9. The cost of the shortest route between the clients `A` and `E`.
     arr << -> { @graph.shortest_route('A', 'E') }
@@ -73,11 +73,5 @@ class DeliveryGain
     arr << -> { @graph.search_routes_cheaper('E', 'D', 60) }
 
     arr.map &:call
-  end
-
-  private
-
-  def not_implemented
-    return 'NOT IMPLEMENTED'
   end
 end

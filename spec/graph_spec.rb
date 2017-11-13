@@ -1,6 +1,5 @@
 require 'graph'
 require 'delivery_gain'
-require 'pry'
 
 RSpec.describe Graph do
   let(:graph) { ['AD4', 'DE1', 'EC8', 'CB2', 'BA6', 'AC9', 'DF7', 'FC5', 'FE9', 'BD3', 'FA3'] }
@@ -22,14 +21,25 @@ RSpec.describe Graph do
     it { expect(subject.shortest_route(start_name, end_name)).to eq 5 }
   end
 
-  describe '#search_routes_with_max_stops' do
+  describe '#count_routes_with_max_stops' do
     let(:start_name) { 'B' }
     let(:end_name) { 'A' }
     let(:max_stops) { 5 }
 
     it do
-      routes = subject.search_routes_with_max_stops(start_name, end_name, max_stops)
+      routes = subject.count_routes_with_max_stops(start_name, end_name, max_stops)
       expect(routes).to eq 6
+    end
+  end
+
+  describe '#count_routes_with_stops' do
+    let(:start_name) { 'A' }
+    let(:end_name) { 'A' }
+    let(:stops) { 3 }
+
+    it do
+      routes = subject.count_routes_with_stops(start_name, end_name, stops)
+      expect(routes).to eq 2
     end
   end
 
